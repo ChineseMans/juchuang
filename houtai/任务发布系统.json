@@ -1,0 +1,3759 @@
+{
+	"info": {
+		"_postman_id": "291fd6cb-78c1-4636-aaac-7bcfc8eb7443",
+		"name": "任务发布系统",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "游客接口",
+			"item": [
+				{
+					"name": "Jwt测试(非正式接口)",
+					"item": [
+						{
+							"name": "获取token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "09dd01a9-a8f9-42cf-87f5-b9bca388cec9",
+										"exec": [
+											"var data = JSON.parse(responseBody);",
+											"if (data.data.token) {",
+											"    pm.environment.set(\"task.jwt.token\", data.data.token);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "text"
+										},
+										{
+											"key": "uid",
+											"value": "123456",
+											"type": "text"
+										},
+										{
+											"key": "role",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/normal/test/getToken?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"normal",
+										"test",
+										"getToken"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "解析token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2590db2d-e96c-4b43-b986-fdb866d5680a",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/normal/test/gettokendata",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"normal",
+										"test",
+										"gettokendata"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "主页登录",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "073babd9-2398-49b6-904c-b7130f302966",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"if (data.data.token) {",
+									"    pm.environment.set(\"task.jwt.token\"+data.data.userinfo.role, data.data.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "admin",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "18725751855",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{task}}/login?",
+							"host": [
+								"{{task}}"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "短信登录",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "073babd9-2398-49b6-904c-b7130f302966",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": "admin"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tel",
+									"value": "18725751855",
+									"description": "电话号码",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "505963",
+									"description": "验证码",
+									"type": "text"
+								},
+								{
+									"key": "pos",
+									"value": "1",
+									"description": "1企业账号登录，3承包商登录",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{task}}/loginByMsg?",
+							"host": [
+								"{{task}}"
+							],
+							"path": [
+								"loginByMsg"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取验证码 Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task}}/captcha",
+							"host": [
+								"{{task}}"
+							],
+							"path": [
+								"captcha"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取示例表格",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "073babd9-2398-49b6-904c-b7130f302966",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task}}/normal/excel/person",
+							"host": [
+								"{{task}}"
+							],
+							"path": [
+								"normal",
+								"excel",
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserInfo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "073babd9-2398-49b6-904c-b7130f302966",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{task.jwt.token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task}}/getUserInfo",
+							"host": [
+								"{{task}}"
+							],
+							"path": [
+								"getUserInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "短信发送",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tel",
+									"value": "18725751855",
+									"type": "text"
+								},
+								{
+									"key": "pos",
+									"value": "1",
+									"description": "1企业登录，2企业找回密码，3承包商登录",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{task}}/normal/message/send?debug=1",
+							"host": [
+								"{{task}}"
+							],
+							"path": [
+								"normal",
+								"message",
+								"send"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "管理后台",
+			"item": [
+				{
+					"name": "管理者账号",
+					"item": [
+						{
+							"name": "添加管理者",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/system/reg?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"system",
+										"reg"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改密码",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/system/pwdedit?uid=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"system",
+										"pwdedit"
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "设置",
+					"item": [
+						{
+							"name": "后台设置获取",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/admin/system/setget?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"system",
+										"setget"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "后台设置更新",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "staff_login_switch",
+											"value": "1",
+											"description": "承包商查询开关",
+											"type": "text"
+										},
+										{
+											"key": "tax_rate",
+											"value": "10",
+											"description": "税率，单位%",
+											"type": "text"
+										},
+										{
+											"key": "sms_allow",
+											"value": "1",
+											"description": "是否开启短信验证码登录",
+											"type": "text"
+										},
+										{
+											"key": "sms_account",
+											"value": "8a216da86add82c9016b1d7b792b2d6c",
+											"type": "text"
+										},
+										{
+											"key": "sms_account_token",
+											"value": "21a1fd8ce8c14bc69134a9bc8dfc8bd6",
+											"type": "text"
+										},
+										{
+											"key": "sms_appId",
+											"value": "8a216da86add82c9016b1d7b79832d73",
+											"type": "text"
+										},
+										{
+											"key": "sms_templet_id",
+											"value": "1",
+											"description": "短信模板ID",
+											"type": "text"
+										},
+										{
+											"key": "msg_active_time",
+											"value": "10",
+											"description": "短信验证码有效时间（分钟）",
+											"type": "text"
+										},
+										{
+											"key": "max_amount_receipt",
+											"value": "5",
+											"description": "每人账号公司信息最多有几条，0为不限制",
+											"type": "text"
+										},
+										{
+											"key": "max_amount_address",
+											"value": "3",
+											"description": "每人账号地址信息最多有几条，0为不限制",
+											"type": "text"
+										},
+										{
+											"key": "msg_interval_time",
+											"value": "60",
+											"description": "短信发送间隔/秒",
+											"type": "text"
+										},
+										{
+											"key": "msg_max_send",
+											"value": "10",
+											"description": "每日同一账号发送短信条数",
+											"type": "text"
+										},
+										{
+											"key": "msg_interval_info",
+											"value": "请稍后再试",
+											"description": "短信间隔期间提示信息",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/system/setupd",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"system",
+										"setupd"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "企业用户",
+					"item": [
+						{
+							"name": "用户信息列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/admin/company/lists?status=1&currentPage=1&pageSize=1&search=187",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"company",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "1",
+											"description": "状态，默认1"
+										},
+										{
+											"key": "currentPage",
+											"value": "1",
+											"description": "第几页，默认1"
+										},
+										{
+											"key": "pageSize",
+											"value": "1",
+											"description": "每页条数，默认10"
+										},
+										{
+											"key": "search",
+											"value": "187",
+											"description": "号码搜索"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "添加企业用户",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "tel",
+											"value": "18725751855",
+											"type": "text"
+										},
+										{
+											"key": "pwd",
+											"value": "123456",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/company/add?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"company",
+										"add"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改用户信息",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "uid",
+											"value": "1",
+											"description": "用户id",
+											"type": "text"
+										},
+										{
+											"key": "pwd",
+											"value": "123456",
+											"description": "不传输，或者传输为空视为不修改",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "1",
+											"description": "状态信息",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/company/upd?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"company",
+										"upd"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "公司信息",
+					"item": [
+						{
+							"name": "列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/admin/receipt/lists?tel=187",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"receipt",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "tel",
+											"value": "187"
+										},
+										{
+											"key": "status",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "firm_name",
+											"value": "业名",
+											"disabled": true
+										},
+										{
+											"key": "tax_number",
+											"value": "23",
+											"disabled": true
+										},
+										{
+											"key": "currentPage",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "pageSize",
+											"value": "2",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "添加公司资料",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "uid",
+											"value": "1",
+											"description": "企业用户id",
+											"type": "text"
+										},
+										{
+											"key": "firm_name",
+											"value": "公司名称",
+											"description": "发票信息",
+											"type": "text"
+										},
+										{
+											"key": "tax_number",
+											"value": "税务编号",
+											"type": "text"
+										},
+										{
+											"key": "bank",
+											"value": "开户银行\t",
+											"type": "text"
+										},
+										{
+											"key": "bank_cid",
+											"value": "银行卡号",
+											"type": "text"
+										},
+										{
+											"key": "firm_holder",
+											"value": "接收人",
+											"description": "法人姓名",
+											"type": "text"
+										},
+										{
+											"key": "firm_tel",
+											"value": "12345678900",
+											"description": "法人电话",
+											"type": "text"
+										},
+										{
+											"key": "firm_address",
+											"value": "公司地址",
+											"description": "公司注册地址",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/receipt/add?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"receipt",
+										"add"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改公司资料",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "rid",
+											"value": "1",
+											"description": "发票ID",
+											"type": "text"
+										},
+										{
+											"key": "uid",
+											"value": "1",
+											"description": "企业用户id",
+											"type": "text"
+										},
+										{
+											"key": "firm_name",
+											"value": "公司名称1",
+											"description": "发票信息",
+											"type": "text"
+										},
+										{
+											"key": "tax_number",
+											"value": "税务编号1",
+											"type": "text"
+										},
+										{
+											"key": "bank",
+											"value": "开户银行\t1",
+											"type": "text"
+										},
+										{
+											"key": "bank_cid",
+											"value": "银行卡号1",
+											"type": "text"
+										},
+										{
+											"key": "firm_holder",
+											"value": "接收人1",
+											"description": "法人姓名",
+											"type": "text"
+										},
+										{
+											"key": "firm_tel",
+											"value": "18755555556",
+											"description": "法人电话",
+											"type": "text"
+										},
+										{
+											"key": "firm_address",
+											"value": "地址",
+											"description": "公司注册地址",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "1",
+											"description": "状态，1，未审核，2，审核通过，3，审核不成功",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/receipt/upd?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"receipt",
+										"upd"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除公司资料",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "rid",
+											"value": "4",
+											"description": "发票ID",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "0",
+											"description": "删除的时候就是更新发票status为0",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/receipt/upd?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"receipt",
+										"upd"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "地址信息",
+					"item": [
+						{
+							"name": "列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/company/address/lists?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"address",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "添加",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "uid",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "d_name",
+											"value": "接人  范.萨.",
+											"type": "text"
+										},
+										{
+											"key": "d_tel",
+											"value": "12345678900",
+											"type": "text"
+										},
+										{
+											"key": "d_address",
+											"value": "地址fdsafasd",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/address/add?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"address",
+										"add"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "addid",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "d_name",
+											"value": "接人  范.萨.fdsfds",
+											"type": "text"
+										},
+										{
+											"key": "d_tel",
+											"value": "12345678900",
+											"type": "text"
+										},
+										{
+											"key": "d_address",
+											"value": "fdfdsafsda",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/address/upd?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"address",
+										"upd"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "addid",
+											"value": "3",
+											"description": "发票ID",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/address/del?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"address",
+										"del"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "任务类别",
+					"item": [
+						{
+							"name": "类别列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/admin/task_class/lists?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"task_class",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取子类",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "cid",
+											"value": "2",
+											"description": "父id",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/task_class/sub?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"task_class",
+										"sub"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "添加类别",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "ctitle",
+											"value": "类别23e",
+											"description": "类别名",
+											"type": "text"
+										},
+										{
+											"key": "pid",
+											"value": "03",
+											"description": "父类ID,顶级传0",
+											"type": "text"
+										},
+										{
+											"key": "ord",
+											"value": "99",
+											"description": "排序，越小越前，不传默认99",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/task_class/add?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"task_class",
+										"add"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改类别",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "cid",
+											"value": "03",
+											"description": "要修改的id",
+											"type": "text"
+										},
+										{
+											"key": "ctitle",
+											"value": "类别23e",
+											"description": "类别名",
+											"type": "text"
+										},
+										{
+											"key": "ord",
+											"value": "99",
+											"description": "排序，越小越前，不传默认99",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/task_class/edit?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"task_class",
+										"edit"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除类别",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "cid",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/task_class/del?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"task_class",
+										"del"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "表格相关操作",
+					"item": [
+						{
+							"name": "上传承包商表格",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "staff",
+											"description": "表格文件",
+											"type": "file",
+											"src": "/C:/Users/admin/Desktop/response.xlsx"
+										},
+										{
+											"key": "tid",
+											"value": "1",
+											"description": "任务ID",
+											"type": "text"
+										},
+										{
+											"key": "",
+											"value": "",
+											"description": "重复上传会重置此任务的承包商信息",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/excel/updstaff?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"excel",
+										"updstaff"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "任务流程",
+					"item": [
+						{
+							"name": "任务列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/admin/task/lists?debug=1&currentPage=0&pageSize=10",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"task",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										},
+										{
+											"key": "currentPage",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "任务详情",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/admin/task/info?tid=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"task",
+										"info"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "tid",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "上传承包商表格",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "staff",
+											"description": "表格文件",
+											"type": "file",
+											"src": "/C:/Users/admin/Desktop/response.xlsx"
+										},
+										{
+											"key": "tid",
+											"value": "3",
+											"description": "任务ID",
+											"type": "text"
+										},
+										{
+											"key": "",
+											"value": "",
+											"description": "重复上传会重置此任务的承包商信息",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/excel/updstaff?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"excel",
+										"updstaff"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改任务状态",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "tid",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "6",
+											"description": "可修改1>2,1>3,4>6,8>9,其他状态时报错",
+											"type": "text"
+										},
+										{
+											"key": "remarks",
+											"value": "备注，两百字之类，比如：发票信息错误",
+											"description": "备注，不传为空，视情况传。",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/task/setStatus?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"task",
+										"setStatus"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取承包商信息",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "tid",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/task/getStaff?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"task",
+										"getStaff"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "邮寄信息管理",
+					"item": [
+						{
+							"name": "列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/admin/mail/lists?st=",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"mail",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "st",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "发送邮件",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token1}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "mid",
+											"value": "4",
+											"description": "邮件id",
+											"type": "text"
+										},
+										{
+											"key": "courier",
+											"value": "圆通快递",
+											"description": "快递商",
+											"type": "text"
+										},
+										{
+											"key": "courier_number",
+											"value": "123456",
+											"description": "快递单号",
+											"type": "text"
+										},
+										{
+											"key": "",
+											"value": "",
+											"description": "修改，重复提交就可以了",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/admin/mail/send?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"admin",
+										"mail",
+										"send"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "企业端",
+			"item": [
+				{
+					"name": "公司信息",
+					"item": [
+						{
+							"name": "公司资料列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/company/receipt/lists?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"receipt",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "2",
+											"description": "状态搜索 0删除禁用 1 待审核 2已审核 3审核不通过 不传递，默认除了0所有",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "添加公司资料",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firm_name",
+											"value": "企业名称",
+											"description": "发票信息",
+											"type": "text"
+										},
+										{
+											"key": "tax_number",
+											"value": "123123123123123123",
+											"type": "text"
+										},
+										{
+											"key": "bank",
+											"value": "开户银行",
+											"type": "text"
+										},
+										{
+											"key": "bank_cid",
+											"value": "银行卡号",
+											"type": "text"
+										},
+										{
+											"key": "firm_holder",
+											"value": "接人  范.萨.",
+											"type": "text"
+										},
+										{
+											"key": "firm_tel",
+											"value": "12345678900",
+											"type": "text"
+										},
+										{
+											"key": "firm_address",
+											"value": "地址fdsafasd",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/receipt/add?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"receipt",
+										"add"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改公司资料",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "rid",
+											"value": "1",
+											"description": "发票ID",
+											"type": "text"
+										},
+										{
+											"key": "firm_name",
+											"value": "公司名称1",
+											"description": "发票信息",
+											"type": "text"
+										},
+										{
+											"key": "tax_number",
+											"value": "123456789123456789",
+											"type": "text"
+										},
+										{
+											"key": "bank",
+											"value": "开户银行fd3e  ",
+											"type": "text"
+										},
+										{
+											"key": "bank_cid",
+											"value": "银行卡号1",
+											"type": "text"
+										},
+										{
+											"key": "firm_holder",
+											"value": "法人",
+											"type": "text"
+										},
+										{
+											"key": "firm_tel",
+											"value": "18755555555",
+											"type": "text"
+										},
+										{
+											"key": "firm_address",
+											"value": "地址范德萨发fdsf ",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/receipt/upd?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"receipt",
+										"upd"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除公司资料",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "rid",
+											"value": "2",
+											"description": "发票ID",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/receipt/del?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"receipt",
+										"del"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "地址信息",
+					"item": [
+						{
+							"name": "列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/company/address/lists?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"address",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "添加",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "d_name",
+											"value": "接人  范.萨.",
+											"type": "text"
+										},
+										{
+											"key": "d_tel",
+											"value": "12345678900",
+											"type": "text"
+										},
+										{
+											"key": "d_address",
+											"value": "地址fdsafasd",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/address/add?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"address",
+										"add"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "addid",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "d_name",
+											"value": "接人  范.萨.fdsfds",
+											"type": "text"
+										},
+										{
+											"key": "d_tel",
+											"value": "12345678900",
+											"type": "text"
+										},
+										{
+											"key": "d_address",
+											"value": "地址fdsafasdfdasfasf",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/address/upd?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"address",
+										"upd"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "addid",
+											"value": "3",
+											"description": "发票ID",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/address/del?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"address",
+										"del"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "任务类别",
+					"item": [
+						{
+							"name": "类别列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "ctitle",
+											"value": "类别23e42",
+											"description": "类别名",
+											"type": "text"
+										},
+										{
+											"key": "pid",
+											"value": "03",
+											"description": "父类ID,顶级传0",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/Company/task_class/lists?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"Company",
+										"task_class",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取子类",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "cid",
+											"value": "0",
+											"description": "父类ID,顶级传0",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/Company/task_class/sub?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"Company",
+										"task_class",
+										"sub"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "以层获取",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "level",
+											"value": "2",
+											"description": "父类ID,顶级传0",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/Company/task_class/level?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"Company",
+										"task_class",
+										"level"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "任务",
+					"item": [
+						{
+							"name": "任务列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/company/task/lists?currentPage=0&pageSize=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"task",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "currentPage",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "添加任务",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "任务名 放到...称123",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "6",
+											"description": "类型，必须是task_class表里的id",
+											"type": "text"
+										},
+										{
+											"key": "rid",
+											"value": "1",
+											"description": "企业id，receiptinfo表id",
+											"type": "text"
+										},
+										{
+											"key": "addid",
+											"value": "1",
+											"description": "地址ID",
+											"type": "text"
+										},
+										{
+											"key": "starttime",
+											"value": "2019-12-01",
+											"description": "任务开始时间",
+											"type": "text"
+										},
+										{
+											"key": "endtime",
+											"value": "2019-12-23 12:12:12",
+											"description": "任务结束时间",
+											"type": "text"
+										},
+										{
+											"key": "caption",
+											"value": "任务描述，200字以内",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/task/add?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"task",
+										"add"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改任务",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "tid",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "任务名称",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "6",
+											"description": "类型，必须是task_class表里的id",
+											"type": "text"
+										},
+										{
+											"key": "rid",
+											"value": "3",
+											"description": "企业id，receiptinfo表id",
+											"type": "text"
+										},
+										{
+											"key": "addid",
+											"value": "2",
+											"description": "地址ID",
+											"type": "text"
+										},
+										{
+											"key": "starttime",
+											"value": "2019-12-01",
+											"description": "任务开始时间",
+											"type": "text"
+										},
+										{
+											"key": "endtime",
+											"value": "2019-12-23 12:12:12",
+											"description": "任务结束时间",
+											"type": "text"
+										},
+										{
+											"key": "caption",
+											"value": "任务描述，200d发",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/task/upd?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"task",
+										"upd"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "任务详情",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/company/task/info?tid=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"task",
+										"info"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "tid",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改任务状态",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "tid",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "1",
+											"description": "可修改0>1,1>5,2>4,2>5,6>8,其他状态时报错",
+											"type": "text"
+										},
+										{
+											"key": "remarks",
+											"value": "备注，两百字之类，比如：报价太贵了，不想做了",
+											"description": "备注，不传为空，视情况传。",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/task/setStatus?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"task",
+										"setStatus"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取承包商信息",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "tid",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/task/getStaff?debug=1",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"task",
+										"getStaff"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "邮寄信息管理",
+					"item": [
+						{
+							"name": "列表",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{task}}/company/mail/lists?st=0",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"mail",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "st",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "接收到",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{task.jwt.token2}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "邮件id",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{task}}/company/mail/receive?",
+									"host": [
+										"{{task}}"
+									],
+									"path": [
+										"company",
+										"mail",
+										"receive"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
